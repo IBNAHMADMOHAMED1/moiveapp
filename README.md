@@ -1,6 +1,6 @@
 # Movie Batch Processing
 
-![Project ](path/to/your/logo.png)
+![Project ](Pasted image.png)
 
 ## Overview
 
