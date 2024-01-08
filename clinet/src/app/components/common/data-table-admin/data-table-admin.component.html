@@ -1,0 +1,119 @@
+<div class="example-container mat-elevation-z8" style="padding: 20px;">
+    <div class="d-flex justify-content-between " style="margin-bottom: 10px">
+        <mat-form-field>
+                <mat-label>Sort By Start Year</mat-label>
+                <mat-select [(ngModel)]="sortOrder" (selectionChange)="sortData($event.value)">
+                    <mat-option value="asc">Ascending</mat-option>
+                    <mat-option value="desc">Descending</mat-option>
+                </mat-select>
+        </mat-form-field>
+        <div class="d-flex justify-content-between">
+            <button mat-icon-button (click)="showFilter = !showFilter">
+                <mat-icon>filter_list</mat-icon>
+            </button>
+            <button mat-icon-button (click)="refreshTable()">
+                <mat-icon>refresh</mat-icon>
+            </button>
+
+
+
+            <!-- <button mat-icon-button style="background-color:#FF8A73; color: white;" (click)="showForm = !showForm">
+                <mat-icon>add_to_photos</mat-icon>
+            </button> -->
+        </div>
+    </div>
+
+
+
+
+    <div class="filter-popup" [ngClass]="{'open': showFilter}">
+        <div class="filter-popup__content">
+            <h2>Filter Data</h2>
+            <mat-radio-group [(ngModel)]="filterType" >
+                <mat-form-field>
+                    <mat-label>Primary Title</mat-label>
+                    <input matInput [(ngModel)]="primaryTitle" placeholder="Primary Title">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Original Title</mat-label>
+                    <input matInput [(ngModel)]="originalTitle" placeholder="Original Title">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Start Year</mat-label>
+                    <input
+                        matInput [(ngModel)]="startYear" placeholder="Start Year">
+                </mat-form-field>
+
+            </mat-radio-group>
+            <div class="filter-popup__actions"
+                style="display: flex !important; margin-top: 30px; align-items: center; gap: 10px;">
+                <button mat-raised-button (click)="showFilter = false">Cancel</button>
+                <button mat-raised-button color="primary" (click)="filterData()">Apply Filter</button>
+            </div>
+        </div>
+    </div>
+
+    <mat-table [dataSource]="dataSource" matSort>
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="tconst">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> TConst </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.tconst}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="titleType">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Title Type </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.titleType}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="primaryTitle">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Primary Title </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.primaryTitle}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="originalTitle">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Original Title </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.originalTitle}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="isAdult">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Is Adult </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.isAdult}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="startYear">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Start Year </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.startYear}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="endYear">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> End Year </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.endYear}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="runtimeMinutes">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Runtime Minutes </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.runtimeMinutes}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="genres">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Genres </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.genres}} </mat-cell>
+        </ng-container>
+
+
+
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;">
+        </mat-row>
+    </mat-table>
+
+    <div *ngIf="!moiveData"
+         style="text-align: center; margin-top: 20px;">
+        <h2>No Data Found</h2>
+    </div>
+
+    <mat-paginator
+        [length]="totalItems"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="handlePageEvent($event)" aria-label="Select page">
+    </mat-paginator>
+
+
+</div>
+
